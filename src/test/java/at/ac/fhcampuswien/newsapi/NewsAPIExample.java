@@ -10,7 +10,7 @@ import java.util.List;
 
 public class NewsAPIExample {
 
-    public static final String APIKEY = "myKey";    //TODO add your api key
+    public static final String APIKEY = "428ce1e3cf64410ebde5dcd05cd4d3e9";    //TODO add your api key
 
     public static void main(String[] args){
 
@@ -32,7 +32,7 @@ public class NewsAPIExample {
                 .setApiKey(APIKEY)
                 .setQ("corona")
                 .setEndPoint(Endpoint.EVERYTHING)
-                .setFrom("2020-03-20")
+                .setFrom("2021-06-14")
                 .setExcludeDomains("Lifehacker.com")
                 .createNewsApi();
 
