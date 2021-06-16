@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.newsapi;
 
 
+import at.ac.fhcampuswien.newsanalyzer.ctrl.NewsApiException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import at.ac.fhcampuswien.newsapi.beans.NewsResponse;
@@ -114,7 +115,7 @@ public class NewsApi {
         this.endpoint = endpoint;
     }
 
-    protected String requestData() {
+    protected String requestData() throws NewsApiException {
         String url = buildURL();
         System.out.println("URL: " + url);
         URL obj = null;
@@ -123,6 +124,7 @@ public class NewsApi {
         } catch (MalformedURLException e) {
             // TODO improve ErrorHandling
             e.printStackTrace();
+            throw new NewsApiException("Error with URL!!!" + e);
         }
         HttpURLConnection con;
         StringBuilder response = new StringBuilder();
@@ -137,12 +139,19 @@ public class NewsApi {
         } catch (IOException e) {
             // TODO improve ErrorHandling
             System.out.println("Error "+e.getMessage());
+            throw new NewsApiException("Error in NewsApi class" + e);
         }
         return response.toString();
     }
 
-    protected String buildURL() {
+    protected String buildURL() throws NewsApiException{
         // TODO ErrorHandling
+
+        if(NEWS_API_URL.equals("")) throw new NewsApiException("Provide URL!");
+        if(getEndpoint().getValue().equals("")) throw new NewsApiException("Provide Endpoint!");
+        if(getQ().equals("")) throw new NewsApiException("Provide Q!");
+        if(getApiKey().equals("")) throw new NewsApiException("Provide ApiKey");
+
         String urlbase = String.format(NEWS_API_URL,getEndpoint().getValue(),getQ(),getApiKey());
         StringBuilder sb = new StringBuilder(urlbase);
 
@@ -184,7 +193,7 @@ public class NewsApi {
         return sb.toString();
     }
 
-    public NewsResponse getNews() {
+    public NewsResponse getNews() throws  NewsApiException{
         NewsResponse newsReponse = null;
         String jsonResponse = requestData();
         if(jsonResponse != null && !jsonResponse.isEmpty()){
@@ -197,6 +206,7 @@ public class NewsApi {
                 }
             } catch (JsonProcessingException e) {
                 System.out.println("Error: "+e.getMessage());
+                throw new NewsApiException("Fail with Json" + e);
             }
         }
         //TODO improve Errorhandling

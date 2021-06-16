@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.newsapi;
 
+import at.ac.fhcampuswien.newsanalyzer.ctrl.NewsApiException;
 import at.ac.fhcampuswien.newsapi.beans.Article;
 import at.ac.fhcampuswien.newsapi.beans.NewsResponse;
 import at.ac.fhcampuswien.newsapi.enums.Category;
@@ -12,7 +13,7 @@ public class NewsAPIExample {
 
     public static final String APIKEY = "428ce1e3cf64410ebde5dcd05cd4d3e9";    //TODO add your api key
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws NewsApiException {
 
         NewsApi newsApi = new NewsApiBuilder()
                 .setApiKey(APIKEY)

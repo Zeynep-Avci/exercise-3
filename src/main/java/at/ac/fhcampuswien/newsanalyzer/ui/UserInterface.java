@@ -26,9 +26,9 @@ public class UserInterface
 
 	public void getDataFromCtrl2(){
 		// TODO implement me
-		System.out.println("Articles in business with keyword 'money'");
+		System.out.println("Articles in business with keyword 'man'");
 
-		ctrl.process("428ce1e3cf64410ebde5dcd05cd4d3e9", "money", Endpoint.TOP_HEADLINES, Country.at, Category.business, Language.de);
+		ctrl.process("428ce1e3cf64410ebde5dcd05cd4d3e9", "man", Endpoint.TOP_HEADLINES, Country.at, Category.business, Language.de);
 	}
 
 	public void getDataFromCtrl3(){
@@ -48,7 +48,7 @@ public class UserInterface
 		Category ScanCategory = Category.valueOf(scanner.next());
 		Language ScanLanguage = Language.valueOf(scanner.next());
 
-		ctrl.process("428ce1e3cf64410ebde5dcd05cd4d3e9",ScanQ,ScanEndPoint, ScanCountry, ScanCategory, ScanLanguage );
+		ctrl.process("428ce1e3cf64410ebde5dcd05cd4d3e9",ScanQ,ScanEndPoint, ScanCountry, ScanCategory, ScanLanguage);
 	}
 
 
