@@ -10,10 +10,7 @@ import at.ac.fhcampuswien.newsapi.enums.Country;
 import at.ac.fhcampuswien.newsapi.enums.Endpoint;
 import at.ac.fhcampuswien.newsapi.enums.Language;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Controller {
@@ -21,6 +18,7 @@ public class Controller {
 	public static final String APIKEY = "428ce1e3cf64410ebde5dcd05cd4d3e9";  //TODO add your api key
 	private List Article;
 	private Object List;
+
 
 	public void process(String apiKey, String q, Endpoint endpoint, Country sourceCountry, Category sourceCategory, Language language) {
 		System.out.println("Start process");
@@ -42,6 +40,7 @@ public class Controller {
 		NewsResponse newsResponse = null;
 		List<Article> articles = null;
 
+
 		try {
 			newsResponse = newsApi.getNews();
 			if(newsResponse != null){
@@ -52,10 +51,10 @@ public class Controller {
 			System.out.println(longestTitle(articles));
 
 			long articleNumber = analyzeSize(articles);
+			System.out.println("");
 			System.out.println("Number of articles in this category: " + articleNumber);
 
-			System.out.println("Author with shortest name:  ");
-			System.out.println(shortestName(articles));
+			System.out.println("Author with shortest name:  " + shortestName(articles));
 		} catch (NewsApiException e) {
 			e.printStackTrace();
 		}
@@ -75,6 +74,7 @@ public class Controller {
 
 
 	public long analyzeSize(List<Article> articles) {
+
 		return articles.stream().count();
 	}
 
@@ -85,12 +85,14 @@ public class Controller {
 		return names.getAuthor();
 	}
 
-	public List<Article> longestTitle(List<Article> titleList){
-		List title = titleList.stream().sorted(Comparator.comparingInt(sortArticle -> sortArticle.getTitle().
-				length())).collect(Collectors.toList());
-		Collections.reverse(title);
+
+
+
+	public List longestTitle(List<Article> titleList){
+		List title = Collections.singletonList(titleList.stream().filter(article -> article.getTitle() != null).sorted(Comparator.comparingInt(article -> article.getTitle().length())).findFirst());
+
+		Collections.sort(title);
+
 		return title;
 	}
-
-
 }
